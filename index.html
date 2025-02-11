@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link Bar with Search</title>
+    <title>~/Home 💞</title>
     <style>
         body {
             display: flex;
@@ -24,14 +24,19 @@
             text-align: center;
             width: calc(80% - 20px); /* Reduce width slightly */
             display: flex;
-            align-items: center; /* Center items vertically */
-            flex-direction: column; /* Stack image and links vertically */
+            align-items: flex-start; /* Align items at the top */
+            flex-direction: row; /* Align items in a row */
         }
         .link-bar img {
             max-width: 100px; /* Set a max width for the image */
-            margin-bottom: 20px; /* Space between image and links */
+            margin-right: 20px; /* Space between image and text */
         }
-        .link-bar .links {
+        .links-container {
+            display: flex;
+            flex-direction: column; /* Stack links vertically */
+            justify-content: center; /* Center links */
+        }
+        .links {
             display: flex; /* Use flexbox for the links */
             flex-wrap: wrap; /* Allow links to wrap to the next line */
             justify-content: center; /* Center links */
@@ -116,23 +121,29 @@
 <body>
     <div class="link-bar">
         <img src="https://th.bing.com/th/id/OIP.emdrlXiM45nf17a20LXTBQAAAA?pcl=1b1a19&rs=1&pid=ImgDetMain" alt="Follow Me">
-        <div class="links" id="linksContainer">
-            <a href="https://www.youtube.com" target="_blank">YouTube</a>
-            <a href="https://www.twitter.com" target="_blank">Twitter</a>
-            <a href="https://www.instagram.com" target="_blank">Instagram</a>
-            <a href="https://www.tiktok.com" target="_blank">TikTok</a>
-            <a href="https://www.reddit.com" target="_blank">Reddit</a>
-            <a href="https://www.reddit.com/r/unixporn/" target="_blank">Reddit [r/unixporn]</a>
-            <a herf="https://aur.archlinux.org/packages" target="_blank">Aur [Packges]</a>
-            <button id="versionButton">View Version</button>
-        </div>
-        <div class="version-info" id="versionInfo">
-            Version: 1.0.4
-            <button id="returnButton">Return</button>
-        </div>
-        <div class="search-container" id="searchContainer">
-            <span class="search-symbol">~></span>
-            <input type="text" placeholder="Search DuckDuckGo :3" id="searchInput">
+        <div class="links-container">
+            <div class="links" id="linksContainer">
+                <a href="https://www.youtube.com" target="_blank">YouTube</a>
+                <a href="https://www.twitter.com" target="_blank">Twitter</a>
+                <a href="https://www.instagram.com" target="_blank">Instagram</a>
+                <a href="https://www.tiktok.com" target="_blank">TikTok</a>
+                <a href="https://www.reddit.com" target="_blank">Reddit</a>
+                <a href="https://www.reddit.com/r/unixporn/" target="_blank">Reddit [r/unixporn]</a>
+                <a herf="https://aur.archlinux.org/packages" target="_blank">Aur [Packges]</a>
+                
+                <button id="versionButton">View Version</button>
+            </div>
+            <div class="version-info" id="versionInfo">
+                <p>Version: 1.0.4</p>
+                <p>made with cying in the bathrrom for 3 hours</p>
+                <div class="left-align">
+                <button id="returnButton">Return</button>
+                </div>
+            </div>
+            <div class="search-container" id="searchContainer">
+                <span class="search-symbol">~></span>
+                <input type="text" placeholder="Search DuckDuckGo :3" id="searchInput">
+            </div>
         </div>
     </div>
     <script>
@@ -176,7 +187,7 @@
             versionInfo.style.display = 'block';
         });
 
-        // Event listener for the return button
+        // return button
         document.getElementById('returnButton').addEventListener('click', function() {
             const linksContainer = document.getElementById('linksContainer');
             const versionInfo = document.getElementById('versionInfo');
