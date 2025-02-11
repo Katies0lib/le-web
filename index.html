@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Bar with Search</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1f1f1f; /* Change to #ff66b2 for a pink background */
+            font-family: 'Arial', sans-serif;
+        }
+        .link-bar {
+            background-color: #1f1f1f; /* Change to #ff66b2 for a pink background */
+            color: #f8f8f2; /* Light text color */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: calc(80% - 20px); /* Reduce width slightly */
+            display: flex;
+            align-items: center; /* Center items vertically */
+            flex-direction: column; /* Stack image and links vertically */
+        }
+        .link-bar img {
+            max-width: 100px; /* Set a max width for the image */
+            margin-bottom: 20px; /* Space between image and links */
+        }
+        .link-bar .links {
+            display: flex; /* Use flexbox for the links */
+            flex-wrap: wrap; /* Allow links to wrap to the next line */
+            justify-content: center; /* Center links */
+            width: 100%; /* Full width for the links */
+            margin: 0; /* Remove any default margin */
+            padding: 0; /* Remove any default padding */
+        }
+        .link-bar a {
+            color: #ff66b2; /* Rose Pine inspired link color */
+            text-decoration: none;
+            font-size: 20px;
+            transition: color 0.3s;
+            margin: 5px; /* Space between links */
+            flex: 1 1 calc(30% - 10px); /* 3 links per row with spacing */
+            position: relative; /* Position relative for the pseudo-element */
+            padding-left: 20px; /* Space for the symbol */
+            display: inline-flex; /* Use inline-flex for better alignment */
+            align-items: center; /* Center items vertically */
+            text-align: center; /* Center text within the link */
+        }
+        .link-bar a:hover {
+            color: lightpink; /* Change hover color to light pink */
+        }
+        .link-bar a:hover::before {
+            content: '>'; /* Add the symbol on hover */
+            margin-right: 5px; /* Space between symbol and text */
+            color: lightpink; /* Color of the symbol */
+            position: absolute; /* Position the symbol */
+            left: 5px; /* Position the symbol to the left */
+        }
+        .search-container {
+            margin-top: 20px; /* Space above the search field */
+            width: 100%; /* Full width for the search container */
+            display: flex; /* Use flexbox for alignment */
+            justify-content: center; /* Center the search field */
+            opacity: 0; /* Make the container invisible */
+            transition: opacity 0.3s; /* Smooth transition for visibility */
+            pointer-events: none; /* Disable interaction */
+        }
+        .search-container.visible {
+            opacity: 1; /* Make the container visible */
+            pointer-events: auto; /* Enable interaction */
+        }
+        .search-container input[type="text"] {
+            padding: 10px;
+            border: none; /* Remove border */
+            border-radius: 5px; /* Rounded corners */
+            width: 60%; /* Width of the search input */
+            margin-left: 10px; /* Space between symbol and input */
+            background-color: transparent; /* Make background transparent */
+            color: #fff; /* White text color */
+            outline: none; /* Remove outline */
+        }
+        .search-symbol {
+            color: #ff66b2; /* Color for the symbol */
+            font-size: 20px; /* Size of the symbol */
+            align-self: center; /* Center the symbol vertically */
+        }
+        /* Style for the version button */
+        #versionButton, #returnButton {
+            margin: 5px; /* Space around the button */
+            padding: 10px 20px; /* Padding for the button */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Rounded corners */
+            background-color: #ff66b2; /* Button background color */
+            color: white; /* Button text color */
+            font-size: 16px; /* Button text size */
+            cursor: pointer; /* Change cursor to pointer */
+            transition: background-color 0.3s; /* Smooth background color transition */
+        }
+        #versionButton:hover, #returnButton:hover {
+            background-color: lightpink; /* Change background color on hover */
+        }
+        .version-info {
+            display: none; /* Initially hidden */
+            font-size: 20px; /* Font size for version info */
+            color: #ff66b2; /* Color for version info */
+            margin-top: 10px; /* Space above version info */
+        }
+    </style>
+</head>
+<body>
+    <div class="link-bar">
+        <img src="https://th.bing.com/th/id/OIP.emdrlXiM45nf17a20LXTBQAAAA?pcl=1b1a19&rs=1&pid=ImgDetMain" alt="Follow Me">
+        <div class="links" id="linksContainer">
+            <a href="https://www.youtube.com" target="_blank">YouTube</a>
+            <a href="https://www.twitter.com" target="_blank">Twitter</a>
+            <a href="https://www.instagram.com" target="_blank">Instagram</a>
+            <a href="https://www.facebook.com" target="_blank">Facebook</a>
+            <a href="https://www.linkedin.com" target="_blank">LinkedIn</a>
+            <a href="https://www.tiktok.com" target="_blank">TikTok</a>
+            <button id="versionButton">View Version</button>
+        </div>
+        <div class="version-info" id="versionInfo">
+            Version: 1.0.4
+            <button id="returnButton">Return</button>
+        </div>
+        <div class="search-container" id="searchContainer">
+            <span class="search-symbol">~></span>
+            <input type="text" placeholder="Search DuckDuckGo :3" id="searchInput">
+        </div>
+    </div>
+    <script>
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                const searchContainer = document.getElementById('searchContainer');
+                const searchInput = document.getElementById('searchInput');
+
+                if (searchContainer.classList.contains('visible')) {
+                    // If the search container is visible, perform the search
+                    const query = searchInput.value;
+                    if (query) {
+                        window.open(`https://duckduckgo.com/?q=${encodeURIComponent(query)}`, '_blank');
+                    }
+                } else {
+                    // If the search container is not visible, show it
+                    searchContainer.classList.toggle('visible');
+                    if (searchContainer.classList.contains('visible')) {
+                        searchInput.focus();
+                    }
+                }
+            }
+        });
+
+        // Hide the search container when clicking outside of it
+        document.addEventListener('click', function(event) {
+            const searchContainer = document.getElementById('searchContainer');
+            const searchInput = document.getElementById('searchInput');
+            if (!searchContainer.contains(event.target) && searchContainer.classList.contains('visible')) {
+                searchContainer.classList.remove('visible');
+            }
+        });
+
+        // Event listener for the version button
+        document.getElementById('versionButton').addEventListener('click', function() {
+            const linksContainer = document.getElementById('linksContainer');
+            const versionInfo = document.getElementById('versionInfo');
+
+            // Hide the links and show the version info
+            linksContainer.style.display = 'none';
+            versionInfo.style.display = 'block';
+        });
+
+        // Event listener for the return button
+        document.getElementById('returnButton').addEventListener('click', function() {
+            const linksContainer = document.getElementById('linksContainer');
+            const versionInfo = document.getElementById('versionInfo');
+
+            // Show the links and hide the version info
+            linksContainer.style.display = 'flex';
+            versionInfo.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
